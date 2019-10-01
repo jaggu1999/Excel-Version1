@@ -22,31 +22,40 @@ void importFromFile(char *fname,lli sheet[][10])
 
 void set(char *string,lli sheet[][10])
 {
-    int row=string[1]-48,col,flag=0;
-    if(string[0]>=65 && string[0]<=90)
-        col=string[0]-65;
-    else col=string[0]-97;
-    lli value=0;
-    for(int i=3;string[i]!='\0';i++)
+    int row=string[0]-48,col,flag=0;
+    if(string[1]>=65 && string[1]<=90)
+        col=string[1]-65;
+    else col=string[1]-97;
+    if(string[3]==' ' || string[3]=='=')
+        printf("What the 404...\nInvalid Syntax or Command\n");
+    else
     {
-        if(string[i]>=48 && string[i]<=57)
-                value=value*10+(string[i]-48);
-        else
+        lli value=0;
+        for(int i=3;string[i]!='\0';i++)
         {
-            value=0;
-            break;
+            if(string[i]>=48 && string[i]<=57)
+                    value=value*10+(string[i]-48);
+            else
+            {
+                printf("What the 404...\nInvalid Syntax or Command\n");
+                flag=1;
+                break;
+            }
+        }
+        if(flag==0)
+        {
+            sheet[row][col]=value;
+            printf("Value is Set successfully\n");
         }
     }
-    sheet[row][col]=value;
-    printf("Value is Set successfully\n");
 }
 
 lli get(char *string,lli sheet[][10])
 {
-    int row=string[1]-48,col;
-    if(string[0]>=65 && string[0]<=90)
-        col=string[0]-65;
-    else col=string[0]-97;
+    int row=string[0]-48,col;
+    if(string[1]>=65 && string[1]<=90)
+        col=string[1]-65;
+    else col=string[1]-97;
     return sheet[row][col];
 }
 
@@ -120,8 +129,9 @@ void exportToFile(char *fname,lli sheet[][10])
         fprintf(temp,"\n");
     }
     fclose(temp);
-    remove(fname);
+    rename(fname,"temp.txt");
     rename("temporary.txt",fname);
+    remove("temp.txt");
     printf("Exported Successfully!!\n");
 }
 
