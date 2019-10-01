@@ -18,7 +18,6 @@ void importFromFile(char *fname,lli sheet[][10])
         printf("Imported Successfully!!\n");
     }
     fclose(f);
-
 }
 
 void set(char *string,lli sheet[][10])
