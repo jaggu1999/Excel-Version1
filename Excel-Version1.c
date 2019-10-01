@@ -15,13 +15,15 @@ void importFromFile(char *fname,lli sheet[][10])
         for(int i=0;i<10;i++)
             for(int j=0;j<10;j++)
                 fscanf(f,"%lld",&sheet[i][j]);
+        printf("Imported Successfully!!\n");
     }
     fclose(f);
+
 }
 
 void set(char *string,lli sheet[][10])
 {
-    int row=string[1]-48,col;
+    int row=string[1]-48,col,flag=0;
     if(string[0]>=65 && string[0]<=90)
         col=string[0]-65;
     else col=string[0]-97;
@@ -29,7 +31,7 @@ void set(char *string,lli sheet[][10])
     for(int i=3;string[i]!='\0';i++)
     {
         if(string[i]>=48 && string[i]<=57)
-            value=value*10+(string[i]-48);
+                value=value*10+(string[i]-48);
         else
         {
             value=0;
@@ -121,6 +123,7 @@ void exportToFile(char *fname,lli sheet[][10])
     fclose(temp);
     remove(fname);
     rename("temporary.txt",fname);
+    printf("Exported Successfully!!\n");
 }
 
 signed main()
@@ -142,7 +145,8 @@ signed main()
             case 1: printf("\nCommands available are:\n\n");
                     printf("1-> import <filename>\n\n2-> set <row><column>=<value>\n\n3-> get <row><column>\n\n4-> print\n\n5-> export <filename>\n\n6-> exit\n");
                     break;
-            case 2: importFromFile(split(string,&pos),sheet);
+            case 2: printf("Importing File...\n");
+                    importFromFile(split(string,&pos),sheet);
                     break;
             case 3: set(split(string,&pos),sheet);
                     break;
@@ -150,7 +154,8 @@ signed main()
                     break;
             case 5: print(sheet);
                     break;
-            case 6: exportToFile(split(string,&pos),sheet);
+            case 6: printf("Exporting File...\n");
+                    exportToFile(split(string,&pos),sheet);
                     break;
             case 0: printf("Go and have a Cup of Coffee...\n");
                     exit(0);
